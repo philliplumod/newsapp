@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:newsapp/Data/Model/category.dart';
+import 'package:newsapp/Data/helper/data.dart';
+import 'package:newsapp/presentation/widgets/category_widget.dart';
 
 class Homescreen extends StatefulWidget {
   const Homescreen({super.key});
@@ -8,16 +11,36 @@ class Homescreen extends StatefulWidget {
 }
 
 class _HomescreenState extends State<Homescreen> {
+  List<CategoryModel> categories = [];
+
+  @override
+  void initState() {
+    super.initState();
+    categories = getCategories();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _appBar(),
-      body: const Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Center(
-            child: Text('Test Screen'),
-          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            height: 100,
+            child: ListView.builder(
+              itemCount: categories.length,
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, index) {
+                return CategoryTile(
+                  label: categories[index].label,
+                  imageUrl: categories[index].imageUrl,
+                );
+              },
+            ),
+          )
         ],
       ),
     );
