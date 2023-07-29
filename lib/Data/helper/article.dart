@@ -17,16 +17,16 @@ class Article {
       jsonData['articles'].forEach((element) {
         if (element['urlToImage'] != null && element['description'] != null) {
           ArticleModel articleModel = ArticleModel(
-            author: element['author'],
-            title: element['title'],
-            description: element['description'],
-            url: element['url'],
-            urlToImage: element['urlToImage'],
-            content: element['content'],
-            publishedAt: element['publishedAt'],
+            author: element['author'] ?? '',
+            title: element['title'] ?? '',
+            description: element['description'] ?? '',
+            url: element['url'] ?? '',
+            urlToImage: element['urlToImage'] ?? '',
+            content: element['content'] ?? '',
+            publishedAt: DateTime.parse(element['publishedAt'] ?? ''),
           );
+          article.add(articleModel);
         }
-        das
       });
     }
   }

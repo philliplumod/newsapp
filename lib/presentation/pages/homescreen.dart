@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:newsapp/Data/Model/article.dart';
 import 'package:newsapp/Data/Model/category.dart';
+import 'package:newsapp/Data/helper/article.dart';
 import 'package:newsapp/Data/helper/data.dart';
+import 'package:newsapp/presentation/widgets/blog_widget.dart';
 import 'package:newsapp/presentation/widgets/category_widget.dart';
 
 class Homescreen extends StatefulWidget {
@@ -12,37 +15,72 @@ class Homescreen extends StatefulWidget {
 
 class _HomescreenState extends State<Homescreen> {
   List<CategoryModel> categories = [];
+  List<ArticleModel> articles = [];
+
+  bool _loading = true;
 
   @override
   void initState() {
     super.initState();
     categories = getCategories();
+    getNews();
+  }
+
+  getNews() async {
+    Article article = Article();
+    await article.getNews();
+    articles = article.article;
+    setState(() {
+      _loading = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _appBar(),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            height: 75,
-            child: ListView.builder(
-              itemCount: categories.length,
-              shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                return CategoryTile(
-                  label: categories[index].label,
-                  imageUrl: categories[index].imageUrl,
-                );
-              },
+      body: _loading
+          ? const Center(child: CircularProgressIndicator())
+          : SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // categories
+                    SizedBox(
+                      height: 75,
+                      child: ListView.builder(
+                        itemCount: categories.length,
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return CategoryTile(
+                            label: categories[index].label,
+                            imageUrl: categories[index].imageUrl,
+                          );
+                        },
+                      ),
+                    ),
+
+                    //blogs
+
+                    ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      itemCount: articles.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return BlogTile(
+                            imageUrl: articles[index].urlToImage,
+                            title: articles[index].title,
+                            desc: articles[index].description);
+                      },
+                    )
+                  ],
+                ),
+              ),
             ),
-          )
-        ],
-      ),
     );
   }
 
