@@ -22,10 +22,14 @@ class CategoryTile extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(6),
               child: CachedNetworkImage(
-                  imageUrl: imageUrl!,
-                  width: 120,
-                  height: 100,
-                  fit: BoxFit.cover),
+                imageUrl: imageUrl!,
+                width: 120,
+                height: 100,
+                fit: BoxFit.cover,
+                placeholder: (context, url) =>
+                    const CircularProgressIndicator(),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
+              ),
             ),
             Container(
                 alignment: Alignment.center,
