@@ -28,7 +28,7 @@ class _HomescreenState extends State<Homescreen> {
         children: [
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            height: 100,
+            height: 75,
             child: ListView.builder(
               itemCount: categories.length,
               shrinkWrap: true,

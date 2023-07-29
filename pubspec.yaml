@@ -7,8 +7,10 @@ environment:
   sdk: '>=3.0.6 <4.0.0'
 
 dependencies:
+  cached_network_image: ^3.2.3
   flutter:
     sdk: flutter
+  http: ^1.1.0
 
 dev_dependencies:
   flutter_test:
