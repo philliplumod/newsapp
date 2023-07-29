@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class CategoryTile extends StatelessWidget {
   final String? imageUrl;
@@ -12,6 +13,7 @@ class CategoryTile extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         ontap;
+        debugPrint('dasdas');
       },
       child: Container(
         margin: const EdgeInsets.only(right: 16),
@@ -19,12 +21,11 @@ class CategoryTile extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(6),
-              child: Image.network(
-                imageUrl!,
-                width: 120,
-                height: 100,
-                fit: BoxFit.cover,
-              ),
+              child: CachedNetworkImage(
+                  imageUrl: imageUrl!,
+                  width: 120,
+                  height: 100,
+                  fit: BoxFit.cover),
             ),
             Container(
                 alignment: Alignment.center,

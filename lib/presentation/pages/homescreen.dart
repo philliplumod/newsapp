@@ -50,7 +50,7 @@ class _HomescreenState extends State<Homescreen> {
                   children: [
                     // categories
                     SizedBox(
-                      height: 75,
+                      height: 60,
                       child: ListView.builder(
                         itemCount: categories.length,
                         shrinkWrap: true,
@@ -65,17 +65,19 @@ class _HomescreenState extends State<Homescreen> {
                     ),
 
                     //blogs
-
-                    ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      itemCount: articles.length,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return BlogTile(
-                            imageUrl: articles[index].urlToImage,
-                            title: articles[index].title,
-                            desc: articles[index].description);
-                      },
+                    Container(
+                      padding: const EdgeInsets.only(top: 16),
+                      child: ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        itemCount: articles.length,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          return BlogTile(
+                              imageUrl: articles[index].urlToImage,
+                              title: articles[index].title,
+                              desc: articles[index].description);
+                        },
+                      ),
                     )
                   ],
                 ),
